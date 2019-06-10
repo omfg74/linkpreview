@@ -131,7 +131,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        public void bind(PreviewObject previewObject) {
            titleTextView.setText(previewObject.getTitle());
            descriptionTextView.setText(previewObject.getDescription());
-           titleTextView.setText(previewObject.getText());
+           textTextView.setText(previewObject.getText());
            String url = previewObject.getImage();
            Log.d("Log", "url "+url);
            if (url!=""){
