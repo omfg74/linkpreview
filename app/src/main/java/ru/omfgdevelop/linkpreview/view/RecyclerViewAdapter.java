@@ -3,6 +3,7 @@ package ru.omfgdevelop.linkpreview.view;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterInterface {
     List<PreviewObject> previewObjects = new ArrayList<>();
     PictureLoaderInterface pictureLoaderInterface;
-    TextView titleTextView, descriptionTextView, textTextView, simpleTextView;
+    TextView simpleTextView, textTextView, titleTextView, descriptionTextView;
     ImageView imageImageView;
     private ViewTarget<ImageView, Bitmap> requestBuilder;
     @NonNull
@@ -47,6 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view ;
+
         switch (i) {
             case 1:
             view = LayoutInflater.from(LinkPreview.getContext()).inflate(R.layout.item_linkprewiew_item, viewGroup, false);
@@ -55,6 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 view =  LayoutInflater.from(LinkPreview.getContext()).inflate(R.layout.item_simplemessage, viewGroup, false);
                 return new SimpleViewHoldr(view);
         }
+
         return null;
     }
 
@@ -67,9 +70,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 titleTextView.setText(previewObjects.get(i).getTitle());
                descriptionTextView.setText(previewObjects.get(i).getDescription());
                 String url = previewObjects.get(i).getImage();
+                Log.d("Log", "url "+url);
                 if (url!=""){
+                    try{
                 Picasso.with(LinkPreview.getContext()).load(url).fit()
                         .centerInside().into(imageImageView);
+                }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
             break;
@@ -96,23 +104,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
-    public class LinkViewHolder extends RecyclerView.ViewHolder {
+    public class BaseViewHolder extends RecyclerView.ViewHolder{
 
+        public BaseViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+        public void bind(PreviewObject previewObject){
+
+        }
+    }
+   final public class LinkViewHolder extends BaseViewHolder {
 
         public LinkViewHolder(@NonNull View itemView) {
             super(itemView);
+            setIsRecyclable(false);
             titleTextView= itemView.findViewById(R.id.titleTextView);
             descriptionTextView= itemView.findViewById(R.id.bodyTextView);
             textTextView= itemView.findViewById(R.id.textTextView);
             imageImageView= itemView.findViewById(R.id.previewImageView);
 
         }
-    }
-    public class SimpleViewHoldr extends RecyclerView.ViewHolder{
+
+       @Override
+       public void bind(PreviewObject previewObject) {
+
+       }
+   }
+    final public class SimpleViewHoldr extends BaseViewHolder{
         public SimpleViewHoldr(@NonNull View itemView) {
             super(itemView);
+            setIsRecyclable(false);
             simpleTextView= itemView.findViewById(R.id.textTextView);
         }
 
+        @Override
+        public void bind(PreviewObject previewObject) {
+
+        }
     }
 }
