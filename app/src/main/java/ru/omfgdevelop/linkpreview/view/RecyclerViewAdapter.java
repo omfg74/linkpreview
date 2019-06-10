@@ -119,7 +119,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        ImageView imageImageView;
         public LinkViewHolder(@NonNull View itemView) {
             super(itemView);
-            setIsRecyclable(false);
+//            setIsRecyclable(false);
             titleTextView= itemView.findViewById(R.id.titleTextView);
             descriptionTextView= itemView.findViewById(R.id.bodyTextView);
             textTextView= itemView.findViewById(R.id.textTextView);
@@ -149,7 +149,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView simpleTextView;
         public SimpleViewHoldr(@NonNull View itemView) {
             super(itemView);
-            setIsRecyclable(false);
+//            setIsRecyclable(false);
             simpleTextView= itemView.findViewById(R.id.textTextView);
         }
 
