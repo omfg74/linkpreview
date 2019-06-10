@@ -22,11 +22,10 @@ import ru.omfgdevelop.linkpreview.interfaces.AdapterInterface;
 import ru.omfgdevelop.linkpreview.interfaces.PictureLoaderInterface;
 import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterInterface {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.BaseViewHolder> implements AdapterInterface {
     List<PreviewObject> previewObjects = new ArrayList<>();
     PictureLoaderInterface pictureLoaderInterface;
-    TextView simpleTextView, textTextView, titleTextView, descriptionTextView;
-    ImageView imageImageView;
+
     private ViewTarget<ImageView, Bitmap> requestBuilder;
     @NonNull
 
@@ -46,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view ;
 
         switch (i) {
@@ -62,27 +61,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull BaseViewHolder viewHolder, int i) {
         switch (previewObjects.get(i).getType()) {
             case 1:
-           textTextView.setText(previewObjects.get(i).getText());
-            if (previewObjects.get(i).getUrl() != null) {
-                titleTextView.setText(previewObjects.get(i).getTitle());
-               descriptionTextView.setText(previewObjects.get(i).getDescription());
-                String url = previewObjects.get(i).getImage();
-                Log.d("Log", "url "+url);
-                if (url!=""){
-                    try{
-                Picasso.with(LinkPreview.getContext()).load(url).fit()
-                        .centerInside().into(imageImageView);
-                }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            }
+//           textTextView.setText(previewObjects.get(i).getText());
+//            if (previewObjects.get(i).getUrl() != null) {
+//                titleTextView.setText(previewObjects.get(i).getTitle());
+//               descriptionTextView.setText(previewObjects.get(i).getDescription());
+//                String url = previewObjects.get(i).getImage();
+//                Log.d("Log", "url "+url);
+//                if (url!=""){
+//                    try{
+//                Picasso.with(LinkPreview.getContext()).load(url).fit()
+//                        .centerInside().into(imageImageView);
+//                }catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+                viewHolder.bind(previewObjects.get(i));
             break;
             case 2:
-                simpleTextView.setText(previewObjects.get(i).getText());
+//                simpleTextView.setText(previewObjects.get(i).getText());
+                viewHolder.bind(previewObjects.get(i));
 //       Glide.with(LinkPreview.getContext())
 //               .asBitmap()
 //               .placeholder(R.drawable.ic_launcher_background)
@@ -114,7 +115,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
    final public class LinkViewHolder extends BaseViewHolder {
-
+       TextView simpleTextView, textTextView, titleTextView, descriptionTextView;
+       ImageView imageImageView;
         public LinkViewHolder(@NonNull View itemView) {
             super(itemView);
             setIsRecyclable(false);
@@ -127,10 +129,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
        @Override
        public void bind(PreviewObject previewObject) {
+           titleTextView.setText(previewObject.getTitle());
+           descriptionTextView.setText(previewObject.getDescription());
+           titleTextView.setText(previewObject.getText());
+           String url = previewObject.getImage();
+           Log.d("Log", "url "+url);
+           if (url!=""){
+               try{
+                   Picasso.with(LinkPreview.getContext()).load(url).fit()
+                           .centerInside().into(imageImageView);
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
+           }
 
        }
    }
     final public class SimpleViewHoldr extends BaseViewHolder{
+        TextView simpleTextView;
         public SimpleViewHoldr(@NonNull View itemView) {
             super(itemView);
             setIsRecyclable(false);
@@ -139,7 +155,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void bind(PreviewObject previewObject) {
-
+            simpleTextView.setText(previewObject.getText());
         }
     }
 }
