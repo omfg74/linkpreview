@@ -39,6 +39,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view ;
         switch (i) {
@@ -61,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 titleTextView.setText(previewObjects.get(i).getTitle());
                descriptionTextView.setText(previewObjects.get(i).getDescription());
                 String url = previewObjects.get(i).getImage();
-                if (url!=null){
+                if (url!=""){
                 Picasso.with(LinkPreview.getContext()).load(url).fit()
                         .centerInside().into(imageImageView);
                 }
