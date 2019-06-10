@@ -1,0 +1,112 @@
+package ru.omfgdevelop.linkpreview.view;
+
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.request.target.ViewTarget;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ru.omfgdevelop.linkpreview.R;
+import ru.omfgdevelop.linkpreview.LinkPreview;
+import ru.omfgdevelop.linkpreview.interfaces.AdapterInterface;
+import ru.omfgdevelop.linkpreview.interfaces.PictureLoaderInterface;
+import ru.omfgdevelop.linkpreview.repository.PreviewObject;
+
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterInterface {
+    List<PreviewObject> previewObjects = new ArrayList<>();
+    PictureLoaderInterface pictureLoaderInterface;
+    TextView titleTextView, descriptionTextView, textTextView, simpleTextView;
+    ImageView imageImageView;
+    private ViewTarget<ImageView, Bitmap> requestBuilder;
+    @NonNull
+
+    @Override
+    public int getItemViewType(int position) {
+        PreviewObject previewObject = previewObjects.get(position);
+        if (previewObject != null) {
+            return previewObject.getType();
+        }
+        return 0;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view ;
+        switch (i) {
+            case 1:
+            view = LayoutInflater.from(LinkPreview.getContext()).inflate(R.layout.item_linkprewiew_item, viewGroup, false);
+            return new LinkViewHolder(view);
+            case 2:
+                view =  LayoutInflater.from(LinkPreview.getContext()).inflate(R.layout.item_simplemessage, viewGroup, false);
+                return new SimpleViewHoldr(view);
+        }
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        switch (previewObjects.get(i).getType()) {
+            case 1:
+           textTextView.setText(previewObjects.get(i).getText());
+            if (previewObjects.get(i).getUrl() != null) {
+                titleTextView.setText(previewObjects.get(i).getTitle());
+               descriptionTextView.setText(previewObjects.get(i).getDescription());
+                String url = previewObjects.get(i).getImage();
+                if (url!=null){
+                Picasso.with(LinkPreview.getContext()).load(url).fit()
+                        .centerInside().into(imageImageView);
+                }
+            }
+            break;
+            case 2:
+                simpleTextView.setText(previewObjects.get(i).getText());
+//       Glide.with(LinkPreview.getContext())
+//               .asBitmap()
+//               .placeholder(R.drawable.ic_launcher_background)
+//               .fitCenter()
+//                .diskCacheStrategy(DiskCacheStrategy.DATA)
+//                .load(url)
+//                .into(viewHolder.imageImageView);
+        }
+
+    }
+    @Override
+    public int getItemCount() {
+        return previewObjects.size();
+    }
+
+    @Override
+    public void appendData(PreviewObject previewObject) {
+        previewObjects.add(previewObject);
+        notifyDataSetChanged();
+    }
+
+    public class LinkViewHolder extends RecyclerView.ViewHolder {
+
+
+        public LinkViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titleTextView= itemView.findViewById(R.id.titleTextView);
+            descriptionTextView= itemView.findViewById(R.id.bodyTextView);
+            textTextView= itemView.findViewById(R.id.textTextView);
+            imageImageView= itemView.findViewById(R.id.previewImageView);
+
+        }
+    }
+    public class SimpleViewHoldr extends RecyclerView.ViewHolder{
+        public SimpleViewHoldr(@NonNull View itemView) {
+            super(itemView);
+            simpleTextView= itemView.findViewById(R.id.textTextView);
+        }
+
+    }
+}
