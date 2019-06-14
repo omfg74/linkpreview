@@ -109,11 +109,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
            titleTextView.setText(previewObject.getTitle());
            textTextView.setText(previewObject.getText());
            DataGetter mainRequest = new MainRequest(null);
+           try{
            mainRequest.createRequestObservable(previewObject.getUrl())
                    .doOnError(new Consumer<Throwable>() {
                                   @Override
                                   public void accept(Throwable throwable) throws Exception {
-                                      Snackbar.make(textTextView,"Error data loading", Snackbar.LENGTH_SHORT).show();
+                                      makeToast("Error "+throwable);
                                   }
                               }
                    ).subscribe(
@@ -123,23 +124,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                            titleTextView.setText(previewObject.getTitle());
                            descriptionTextView.setText(previewObject.getDescription());
                            String url = previewObject.getImage();
-                           Log.d("Log", "url "+url);
-                           if (url!=""){
-                               try{
+                           Log.d("Log", "url " + url);
+                           if (url != "") {
+                               try {
                                    Picasso.with(LinkPreview.getContext()).load(url).fit()
                                            .centerInside().into(imageImageView);
-                               }catch (Exception e){
+                               } catch (Exception e) {
                                    e.printStackTrace();
                                }
                            }
 
                        }
-                   }
-           );
+                   }, new Consumer<Throwable>() {
+                       @Override
+                       public void accept(Throwable throwable) throws Exception {
+                           makeToast("Error "+throwable);
+                       }
+                   });
+           }catch (Exception e){
+               e.printStackTrace();
+           }
+
 
 
        }
    }
+
+    private void makeToast(String s) {
+        Toast.makeText(LinkPreview.getContext(),s, Toast.LENGTH_SHORT).show();
+    }
+
     final public class SimpleViewHoldr extends BaseViewHolder{
         TextView simpleTextView;
         public SimpleViewHoldr(@NonNull View itemView) {
