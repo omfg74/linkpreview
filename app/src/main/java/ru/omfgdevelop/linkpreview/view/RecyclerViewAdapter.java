@@ -123,7 +123,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public SimpleViewHoldr(@NonNull View itemView) {
             super(itemView);
-//            setIsRecyclable(false);
             simpleTextView = itemView.findViewById(R.id.textTextView);
         }
 

@@ -6,7 +6,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import ru.omfgdevelop.linkpreview.interfaces.DataGetter;
 import ru.omfgdevelop.linkpreview.interfaces.MainActivityContract;
 import ru.omfgdevelop.linkpreview.utils.RetrofitClient;
 import ru.omfgdevelop.linkpreview.interfaces.MainRequestcallback;
