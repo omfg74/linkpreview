@@ -1,6 +1,5 @@
 package ru.omfgdevelop.linkpreview.view;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,7 +18,6 @@ import ru.omfgdevelop.linkpreview.R;
 import ru.omfgdevelop.linkpreview.LinkPreview;
 import ru.omfgdevelop.linkpreview.interfaces.AdapterInterface;
 import ru.omfgdevelop.linkpreview.interfaces.AdapterItemNumberCallBack;
-import ru.omfgdevelop.linkpreview.interfaces.PictureLoaderInterface;
 import ru.omfgdevelop.linkpreview.repository.Constants;
 import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 
