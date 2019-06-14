@@ -6,11 +6,11 @@ import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 public interface MainActivityContract {
     interface View {
         void showData(PreviewObject previewObject);
+        void changeText();
     }
 
     interface Model {
         void createRequest(String q);
-
         Observable<PreviewObject> createRequest2(String q);
     }
 

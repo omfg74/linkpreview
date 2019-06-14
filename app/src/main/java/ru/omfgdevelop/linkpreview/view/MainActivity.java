@@ -14,7 +14,7 @@ import ru.omfgdevelop.linkpreview.presenter.MainAcivityPresenter;
 import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
-
+//This sample app was writen in a day.
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
     MainActivityContract.Presenter presenter;
@@ -45,5 +45,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     @Override
     public void showData(PreviewObject previewObject) {
         adapter.appendData(previewObject);
+    }
+
+    @Override
+    public void changeText() {
+        editText.setText("");
     }
 }

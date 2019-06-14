@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.target.ViewTarget;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

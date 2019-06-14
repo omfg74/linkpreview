@@ -11,7 +11,6 @@ import ru.omfgdevelop.linkpreview.interfaces.BitmapCallBackInterface;
 import ru.omfgdevelop.linkpreview.interfaces.MainActivityContract;
 import ru.omfgdevelop.linkpreview.interfaces.MainRequestcallback;
 import ru.omfgdevelop.linkpreview.interfaces.PictureLoaderInterface;
-import ru.omfgdevelop.linkpreview.repository.NetworkPictureLoader;
 import ru.omfgdevelop.linkpreview.utils.LinkParser;
 
 public class MainAcivityPresenter implements MainActivityContract.Presenter, MainRequestcallback, BitmapCallBackInterface {
@@ -26,7 +25,6 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         this.view = view;
         this.model = new MainRequest(this);
         this.compositeDisposable = new CompositeDisposable();
-        this.pictureLoaderInterface = new NetworkPictureLoader(this);
     }
 
     @Override
@@ -50,6 +48,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         this.text = s;
         LinkParserInterface linkParserInterface = new LinkParser();
         String link = linkParserInterface.parse(s);
+        view.changeText();
         if (link != null) {
             type =Constants.SNIPPETMESSAGE;
             fetchDatafromSourse(s);
