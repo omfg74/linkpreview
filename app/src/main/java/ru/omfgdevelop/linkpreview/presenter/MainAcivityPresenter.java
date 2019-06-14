@@ -24,7 +24,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     public MainAcivityPresenter(MainActivityContract.View view) {
         this.view = view;
-//        this.model = new MainRequest(this);
+        this.model = new MainRequest(this);
         this.compositeDisposable = new CompositeDisposable();
         this.pictureLoaderInterface = new NetworkPictureLoader(this);
     }
@@ -53,11 +53,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         if (link != null) {
             type =Constants.SNIPPETMESSAGE;
             fetchDatafromSourse(s);
-            PreviewObject previewObject = new PreviewObject();
-            previewObject.setUrl(link);
-            previewObject.setText(text);
-            previewObject.setType(type);
-            view.showData(previewObject);
+
         } else {
             type = Constants.SIMPLE_MESSAGE;
             PreviewObject previewObject = new PreviewObject();
@@ -70,7 +66,9 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void callbackMainRequest(PreviewObject previewObject) {
-
+        previewObject.setText(text);
+        previewObject.setType(type);
+        view.showData(previewObject);
     }
 
     @Override
