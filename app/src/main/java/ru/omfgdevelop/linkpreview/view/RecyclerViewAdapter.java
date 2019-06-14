@@ -72,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void appendData(PreviewObject previewObject) {
         previewObjects.add(previewObject);
-        notifyDataSetChanged();
+        notifyDataSetChanged();//
     }
 
     public class BaseViewHolder extends RecyclerView.ViewHolder {
