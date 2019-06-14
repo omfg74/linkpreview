@@ -61,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder viewHolder, int i) {
-                        viewHolder.bind(previewObjects.get(i));
+                        viewHolder.bind(previewObjects.get(i));//
     }
 
     @Override
