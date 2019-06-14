@@ -61,15 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder viewHolder, int i) {
-        switch (previewObjects.get(i).getType()) {
-            case 1:
-
-                viewHolder.bind(previewObjects.get(i));
-                break;
-            case 2:
-
-        }
-
+                        viewHolder.bind(previewObjects.get(i));
     }
 
     @Override
@@ -95,7 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     final public class LinkViewHolder extends BaseViewHolder {
-        TextView simpleTextView, textTextView, titleTextView, descriptionTextView;
+        TextView  textTextView, titleTextView, descriptionTextView;
         ImageView imageImageView;
 
         public LinkViewHolder(@NonNull View itemView) {

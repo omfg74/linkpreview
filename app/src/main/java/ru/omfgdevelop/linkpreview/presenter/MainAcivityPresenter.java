@@ -73,7 +73,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     @Override
     public void onErrorCallBack(Throwable t) {
         PreviewObject previewObject = new PreviewObject();
-        previewObject.setType(2);
+        previewObject.setType(Constants.SIMPLE_MESSAGE);
         previewObject.setText(text);
         view.showData(previewObject);
     }
