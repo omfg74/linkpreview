@@ -24,7 +24,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     public MainAcivityPresenter(MainActivityContract.View view) {
         this.view = view;
-        this.model = new MainRequest(this);
+//        this.model = new MainRequest(this);
         this.compositeDisposable = new CompositeDisposable();
         this.pictureLoaderInterface = new NetworkPictureLoader(this);
     }
@@ -36,7 +36,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void fetchDatafromSourse(String q) {
-        model.createRequest(q);
+//        model.createRequest(q);
     }
 
 
@@ -51,8 +51,13 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         LinkParserInterface linkParserInterface = new LinkParser();
         String link = linkParserInterface.parse(s);
         if (link != null) {
-            type = Constants.SNIPPETMESSAGE;
-            fetchDatafromSourse(s);
+            type =Constants.SNIPPETMESSAGE;
+//            fetchDatafromSourse(s);
+            PreviewObject previewObject = new PreviewObject();
+            previewObject.setUrl(link);
+            previewObject.setText(text);
+            previewObject.setType(type);
+            view.showData(previewObject);
         } else {
             type = Constants.SIMPLE_MESSAGE;
             PreviewObject previewObject = new PreviewObject();
@@ -65,15 +70,13 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void callbackMainRequest(PreviewObject previewObject) {
-        previewObject.setText(text);
-        previewObject.setType(type);
-        view.showData(previewObject);
+
     }
 
     @Override
     public void onErrorCallBack(Throwable t) {
         PreviewObject previewObject = new PreviewObject();
-        previewObject.setType(2);
+        previewObject.setType(Constants.SIMPLE_MESSAGE);
         previewObject.setText(text);
         view.showData(previewObject);
     }

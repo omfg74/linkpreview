@@ -6,11 +6,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import ru.omfgdevelop.linkpreview.interfaces.DataGetter;
 import ru.omfgdevelop.linkpreview.utils.RetrofitClient;
-import ru.omfgdevelop.linkpreview.interfaces.MainActivityContract;
 import ru.omfgdevelop.linkpreview.interfaces.MainRequestcallback;
 
-public class MainRequest implements MainActivityContract.Model {
+public class MainRequest implements DataGetter {
 
     MainRequestcallback requestcallback;
 
@@ -18,15 +18,15 @@ public class MainRequest implements MainActivityContract.Model {
         this.requestcallback = mainRequestcallback;
     }
 
+
     @Override
-    public Observable<PreviewObject> createRequest2(String q) {
+    public Observable<PreviewObject> createRequestObservable(String q) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         return retrofitClient.getRetrofitInterface().getPreviewObject(Constants.API_KEY, q)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    @Override
     public void createRequest(String q) {
         final RetrofitClient retrofitClient = RetrofitClient.getInstance();
         retrofitClient.getRetrofitInterface().getPreviewObject(Constants.API_KEY, q)
