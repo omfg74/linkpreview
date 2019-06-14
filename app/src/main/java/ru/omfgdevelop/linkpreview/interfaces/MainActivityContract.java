@@ -7,6 +7,7 @@ public interface MainActivityContract {
     interface View {
         void showData(PreviewObject previewObject);
         void changeText();
+        void addData(int itemNumber, PreviewObject previewObject);
     }
 
     interface Model {
@@ -16,11 +17,9 @@ public interface MainActivityContract {
 
     interface Presenter {
         void onCreate();
-
         void fetchDatafromSourse(String q);
-
         void onDestroy();
-
         void onButtonPressed(String s);
+        void provideNumber(int i);
     }
 }

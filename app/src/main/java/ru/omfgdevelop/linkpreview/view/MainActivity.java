@@ -9,11 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ru.omfgdevelop.linkpreview.R;
+import ru.omfgdevelop.linkpreview.interfaces.AdapterItemNumberCallBack;
 import ru.omfgdevelop.linkpreview.interfaces.MainActivityContract;
 import ru.omfgdevelop.linkpreview.presenter.MainAcivityPresenter;
 import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 
-public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
+public class MainActivity extends AppCompatActivity implements MainActivityContract.View, AdapterItemNumberCallBack {
 //This sample app was writen in a day.
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         editText = findViewById(R.id.editText);
         editText.setText("http://ya.ru");
         recyclerView = findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter();
+        adapter = new RecyclerViewAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         button.setOnClickListener(new View.OnClickListener() {
@@ -50,5 +51,15 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     @Override
     public void changeText() {
         editText.setText("");
+    }
+
+    @Override
+    public void addData(int itemNumber, PreviewObject previewObject) {
+        adapter.addDataToItem(itemNumber,previewObject);
+    }
+
+    @Override
+    public void giveItemNumber(int i) {
+        presenter.provideNumber(i);
     }
 }

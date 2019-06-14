@@ -18,12 +18,18 @@ import java.util.List;
 import ru.omfgdevelop.linkpreview.R;
 import ru.omfgdevelop.linkpreview.LinkPreview;
 import ru.omfgdevelop.linkpreview.interfaces.AdapterInterface;
+import ru.omfgdevelop.linkpreview.interfaces.AdapterItemNumberCallBack;
 import ru.omfgdevelop.linkpreview.interfaces.PictureLoaderInterface;
+import ru.omfgdevelop.linkpreview.repository.Constants;
 import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.BaseViewHolder> implements AdapterInterface {
     List<PreviewObject> previewObjects = new ArrayList<>();
-    PictureLoaderInterface pictureLoaderInterface;
+    AdapterItemNumberCallBack callBack;
+
+    public RecyclerViewAdapter(AdapterItemNumberCallBack callBack) {
+        this.callBack = callBack;
+    }
 
     @NonNull
 
@@ -47,10 +53,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View view;
 
         switch (i) {
-            case 1:
+            case Constants.SNIPPETMESSAGE:
                 view = LayoutInflater.from(LinkPreview.getContext()).inflate(R.layout.item_linkprewiew_item, viewGroup, false);
                 return new LinkViewHolder(view);
-            case 2:
+            case Constants.SIMPLE_MESSAGE:
                 view = LayoutInflater.from(LinkPreview.getContext()).inflate(R.layout.item_simplemessage, viewGroup, false);
                 return new SimpleViewHoldr(view);
         }
@@ -60,7 +66,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder viewHolder, int i) {
-                        viewHolder.bind(previewObjects.get(i));//
+                        viewHolder.bind(previewObjects.get(i), i);//
+        switch (previewObjects.get(i).getType()){
+            case Constants.SNIPPETMESSAGE:
+                    viewHolder.bind(previewObjects.get(i), i);
+                    break;
+                case Constants.SIMPLE_MESSAGE:
+                    viewHolder.bind(previewObjects.get(i));
+                    break;
+        }
+
     }
 
     @Override
@@ -73,6 +88,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         previewObjects.add(previewObject);
         notifyDataSetChanged();
     }
+    public void addDataToItem(int itemNumber, PreviewObject previewObject){
+        this.previewObjects.set(itemNumber,previewObject);
+        notifyDataSetChanged();
+    }
+
 
     public class BaseViewHolder extends RecyclerView.ViewHolder {
 
@@ -80,13 +100,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
         }
 
+        public void bind(PreviewObject previewObject, int i) {
+
+        }
         public void bind(PreviewObject previewObject) {
 
         }
+
     }
 
     final public class LinkViewHolder extends BaseViewHolder {
-        TextView simpleTextView, textTextView, titleTextView, descriptionTextView;
+        TextView  textTextView, titleTextView, descriptionTextView;
         ImageView imageImageView;
 
         public LinkViewHolder(@NonNull View itemView) {
@@ -99,10 +123,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         @Override
-        public void bind(PreviewObject previewObject) {
+        public void bind(PreviewObject previewObject, int i) {
+            textTextView.setText(previewObject.getText());
+            if (previewObject.getUrl()!=null){
             titleTextView.setText(previewObject.getTitle());
             descriptionTextView.setText(previewObject.getDescription());
-            textTextView.setText(previewObject.getText());
             String url = previewObject.getImage();
             Log.d("Log", "url " + url);
             if (url != "") {
@@ -114,6 +139,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
 
+        }else callBack.giveItemNumber(i);
         }
     }
 
@@ -130,4 +156,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             simpleTextView.setText(previewObject.getText());
         }
     }
+
 }

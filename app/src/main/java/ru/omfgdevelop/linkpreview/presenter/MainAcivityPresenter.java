@@ -20,6 +20,8 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     PictureLoaderInterface pictureLoaderInterface;
     int type;
     String text;
+    int itemNumber;
+    String link;
 
     public MainAcivityPresenter(MainActivityContract.View view) {
         this.view = view;
@@ -47,11 +49,15 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     public void onButtonPressed(String s) {
         this.text = s;
         LinkParserInterface linkParserInterface = new LinkParser();
-        String link = linkParserInterface.parse(s);
+        link = linkParserInterface.parse(s);
         view.changeText();
         if (link != null) {
             type =Constants.SNIPPETMESSAGE;
-            fetchDatafromSourse(s);
+//            fetchDatafromSourse(s);
+            PreviewObject previewObject = new PreviewObject();
+            previewObject.setText(text);
+            previewObject.setType(type);
+            view.showData(previewObject);
 
         } else {
             type = Constants.SIMPLE_MESSAGE;
@@ -64,11 +70,19 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     }
 
     @Override
+    public void provideNumber(int i) {
+        this.itemNumber = i;
+        fetchDatafromSourse(link);
+
+    }
+
+    @Override
     public void callbackMainRequest(PreviewObject previewObject) {
         previewObject.setText(text);
         previewObject.setType(type);
-        view.showData(previewObject);
-    }
+//        view.showData(previewObject);
+        view.addData(itemNumber, previewObject);
+        }
 
     @Override
     public void onErrorCallBack(Throwable t) {
