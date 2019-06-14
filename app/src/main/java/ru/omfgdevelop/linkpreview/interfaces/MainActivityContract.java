@@ -8,11 +8,13 @@ public interface MainActivityContract {
         void showData(PreviewObject previewObject);
         void changeText();
         void addData(int itemNumber, PreviewObject previewObject);
+
+        void removeDataItem(int itemNumber);
     }
 
     interface Model {
         void createRequest(String q);
-        Observable<PreviewObject> createRequest2(String q);
+//        Observable<PreviewObject> createRequest2(String q);
     }
 
     interface Presenter {

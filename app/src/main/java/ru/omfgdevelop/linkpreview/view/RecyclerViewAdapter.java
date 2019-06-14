@@ -88,8 +88,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         previewObjects.add(previewObject);
         notifyDataSetChanged();
     }
+    public void removeItem(int item){
+        previewObjects.remove(item);
+
+    }
     public void addDataToItem(int itemNumber, PreviewObject previewObject){
         this.previewObjects.set(itemNumber,previewObject);
+        notifyDataSetChanged();
         notifyDataSetChanged();
     }
 

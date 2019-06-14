@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
+    public void removeDataItem(int itemNumber) {
+        adapter.removeItem(itemNumber);
+    }
+
+    @Override
     public void giveItemNumber(int i) {
         presenter.provideNumber(i);
     }

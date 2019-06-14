@@ -18,14 +18,14 @@ public class MainRequest implements MainActivityContract.Model {
         this.requestcallback = mainRequestcallback;
     }
 
-
-    @Override
-    public Observable<PreviewObject> createRequest2(String q) {
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
-        return retrofitClient.getRetrofitInterface().getPreviewObject(Constants.API_KEY, q)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
+//
+//    @Override
+//    public Observable<PreviewObject> createRequest2(String q) {
+//        RetrofitClient retrofitClient = RetrofitClient.getInstance();
+//        return retrofitClient.getRetrofitInterface().getPreviewObject(Constants.API_KEY, q)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+//    }
 
     public void createRequest(String q) {
         final RetrofitClient retrofitClient = RetrofitClient.getInstance();

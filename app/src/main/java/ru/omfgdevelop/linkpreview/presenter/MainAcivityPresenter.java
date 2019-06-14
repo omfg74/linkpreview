@@ -86,6 +86,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void onErrorCallBack(Throwable t) {
+        view.removeDataItem(itemNumber);
         PreviewObject previewObject = new PreviewObject();
         previewObject.setType(Constants.SIMPLE_MESSAGE);
         previewObject.setText(text);
