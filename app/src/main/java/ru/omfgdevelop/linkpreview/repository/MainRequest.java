@@ -7,10 +7,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import ru.omfgdevelop.linkpreview.interfaces.DataGetter;
+import ru.omfgdevelop.linkpreview.interfaces.MainActivityContract;
 import ru.omfgdevelop.linkpreview.utils.RetrofitClient;
 import ru.omfgdevelop.linkpreview.interfaces.MainRequestcallback;
 
-public class MainRequest implements DataGetter {
+public class MainRequest implements MainActivityContract.Model {
 
     MainRequestcallback requestcallback;
 
@@ -20,7 +21,7 @@ public class MainRequest implements DataGetter {
 
 
     @Override
-    public Observable<PreviewObject> createRequestObservable(String q) {
+    public Observable<PreviewObject> createRequest2(String q) {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         return retrofitClient.getRetrofitInterface().getPreviewObject(Constants.API_KEY, q)
                 .subscribeOn(Schedulers.io())

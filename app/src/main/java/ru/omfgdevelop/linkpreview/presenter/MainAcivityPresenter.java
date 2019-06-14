@@ -36,7 +36,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void fetchDatafromSourse(String q) {
-//        model.createRequest(q);
+        model.createRequest(q);
     }
 
 
@@ -52,7 +52,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         String link = linkParserInterface.parse(s);
         if (link != null) {
             type =Constants.SNIPPETMESSAGE;
-//            fetchDatafromSourse(s);
+            fetchDatafromSourse(s);
             PreviewObject previewObject = new PreviewObject();
             previewObject.setUrl(link);
             previewObject.setText(text);
