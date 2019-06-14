@@ -4,17 +4,23 @@ import io.reactivex.Observable;
 import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 
 public interface MainActivityContract {
-    interface View{
+    interface View {
         void showData(PreviewObject previewObject);
     }
-    interface Model{
+
+    interface Model {
         void createRequest(String q);
+
         Observable<PreviewObject> createRequest2(String q);
     }
-    interface Presenter{
+
+    interface Presenter {
         void onCreate();
+
         void fetchDatafromSourse(String q);
+
         void onDestroy();
+
         void onButtonPressed(String s);
     }
 }

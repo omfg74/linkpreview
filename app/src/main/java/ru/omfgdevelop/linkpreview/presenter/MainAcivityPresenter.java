@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import io.reactivex.disposables.CompositeDisposable;
 import ru.omfgdevelop.linkpreview.interfaces.LinkParserInterface;
+import ru.omfgdevelop.linkpreview.repository.Constants;
 import ru.omfgdevelop.linkpreview.repository.MainRequest;
 import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 import ru.omfgdevelop.linkpreview.interfaces.BitmapCallBackInterface;
@@ -20,6 +21,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     PictureLoaderInterface pictureLoaderInterface;
     int type;
     String text;
+
     public MainAcivityPresenter(MainActivityContract.View view) {
         this.view = view;
         this.model = new MainRequest(this);
@@ -34,9 +36,8 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void fetchDatafromSourse(String q) {
-             model.createRequest(q);
+        model.createRequest(q);
     }
-
 
 
     @Override
@@ -49,11 +50,11 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         this.text = s;
         LinkParserInterface linkParserInterface = new LinkParser();
         String link = linkParserInterface.parse(s);
-        if(link!=null){
-            type = 1;
+        if (link != null) {
+            type = Constants.SNIPPETMESSAGE;
             fetchDatafromSourse(s);
-        }else {
-            type=2;
+        } else {
+            type = Constants.SIMPLE_MESSAGE;
             PreviewObject previewObject = new PreviewObject();
             previewObject.setText(s);
             previewObject.setType(type);
@@ -71,9 +72,9 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void onErrorCallBack(Throwable t) {
-       PreviewObject previewObject = new PreviewObject();
-       previewObject.setType(2);
-       previewObject.setText(text);
+        PreviewObject previewObject = new PreviewObject();
+        previewObject.setType(2);
+        previewObject.setText(text);
         view.showData(previewObject);
     }
 
