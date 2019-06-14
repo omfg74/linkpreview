@@ -72,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void appendData(PreviewObject previewObject) {
         previewObjects.add(previewObject);
-        notifyDataSetChanged();//
+        notifyDataSetChanged();
     }
 
     public class BaseViewHolder extends RecyclerView.ViewHolder {
@@ -87,7 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     final public class LinkViewHolder extends BaseViewHolder {
-        TextView  textTextView, titleTextView, descriptionTextView;
+        TextView simpleTextView, textTextView, titleTextView, descriptionTextView;
         ImageView imageImageView;
 
         public LinkViewHolder(@NonNull View itemView) {
@@ -123,8 +123,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public SimpleViewHoldr(@NonNull View itemView) {
             super(itemView);
+//            setIsRecyclable(false);
             simpleTextView = itemView.findViewById(R.id.textTextView);
-        }///
+        }
 
         @Override
         public void bind(PreviewObject previewObject) {
