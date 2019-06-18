@@ -1,5 +1,7 @@
 package ru.omfgdevelop.linkpreview.presenter;
 
+import android.util.Log;
+
 import io.reactivex.disposables.CompositeDisposable;
 import ru.omfgdevelop.linkpreview.interfaces.LinkParserInterface;
 import ru.omfgdevelop.linkpreview.repository.Constants;
@@ -32,6 +34,8 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     @Override
     public void fetchDatafromSourse(String q) {
         model.createRequest(q);
+//        Log.d("Log", "Model creAate request");
+//        callbackMainRequest(new PreviewObject());
     }
 
 
@@ -73,6 +77,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void callbackMainRequest(PreviewObject previewObject) {
+        Log.d("Log", "Call back");
         previewObject.setText(text);
         previewObject.setType(type);
         view.addData(itemNumber, previewObject);

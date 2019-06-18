@@ -6,6 +6,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ru.omfgdevelop.linkpreview.interfaces.MainActivityContract;
 import ru.omfgdevelop.linkpreview.utils.RetrofitClient;
 import ru.omfgdevelop.linkpreview.interfaces.MainRequestcallback;
@@ -54,4 +57,22 @@ public class MainRequest implements MainActivityContract.Model {
     }
 
 
+//    @Override
+//    public void createRequest(String q) {
+//        RetrofitClient retrofitClient = RetrofitClient.getInstance();
+//        Call<PreviewObject> response = retrofitClient.getRetrofitInterface().getPreviewObjectRetrofit(Constants.API_KEY, q);
+//        response.enqueue(new Callback<PreviewObject>() {
+//            @Override
+//            public void onResponse(Call<PreviewObject> call, Response<PreviewObject> response) {
+//                requestcallback.callbackMainRequest(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<PreviewObject> call, Throwable t) {
+//                requestcallback.onErrorCallBack(t);
+//            }
+//        });
+//
+//
+//    }
 }

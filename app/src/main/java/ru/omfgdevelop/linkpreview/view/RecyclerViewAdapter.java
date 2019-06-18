@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder viewHolder, int i) {
-                        viewHolder.bind(previewObjects.get(i), i);//
+//                        viewHolder.bind(previewObjects.get(i), i);//
         switch (previewObjects.get(i).getType()){
             case Constants.SNIPPETMESSAGE:
                     viewHolder.bind(previewObjects.get(i), i);
@@ -72,6 +72,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 case Constants.SIMPLE_MESSAGE:
                     viewHolder.bind(previewObjects.get(i));
                     break;
+                    default:
+                        break;
         }
 
     }
@@ -93,7 +95,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void addDataToItem(int itemNumber, PreviewObject previewObject){
         this.previewObjects.set(itemNumber,previewObject);
         notifyDataSetChanged();
-        notifyDataSetChanged();
     }
 
 
@@ -105,9 +106,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public void bind(PreviewObject previewObject, int i) {
 
+            Log.d("SUPER","call parent");
         }
         public void bind(PreviewObject previewObject) {
-
+            Log.d("SUPER","call parent");
         }
 
     }
@@ -126,7 +128,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         @Override
-        public void bind(PreviewObject previewObject, int i) {
+        public void bind(@NonNull PreviewObject previewObject, int i) {
             textTextView.setText(previewObject.getText());
             if (previewObject.getUrl()!=null){
             titleTextView.setText(previewObject.getTitle());
@@ -155,7 +157,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         @Override
-        public void bind(PreviewObject previewObject) {
+        public void bind(@NonNull PreviewObject previewObject) {
             simpleTextView.setText(previewObject.getText());
         }
     }
