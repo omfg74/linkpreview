@@ -2,6 +2,10 @@ package ru.omfgdevelop.linkpreview.presenter;
 
 import android.util.Log;
 
+import java.util.Iterator;
+import java.util.Set;
+import java.util.UUID;
+
 import io.reactivex.disposables.CompositeDisposable;
 import ru.omfgdevelop.linkpreview.interfaces.LinkParserInterface;
 import ru.omfgdevelop.linkpreview.repository.Constants;
@@ -15,6 +19,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     MainActivityContract.View view;
     MainActivityContract.Model model;
     CompositeDisposable compositeDisposable;
+    Set<String> waitSet;
     int type;
     String text;
     int itemNumber;
@@ -34,6 +39,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     @Override
     public void fetchDatafromSourse(String q) {
         model.createRequest(q);
+        waitSet.add(q);
 //        Log.d("Log", "Model creAate request");
 //        callbackMainRequest(new PreviewObject());
     }
@@ -49,15 +55,14 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         this.text = s;
         LinkParserInterface linkParserInterface = new LinkParser();
         link = linkParserInterface.parse(s);
+        waitSet.add(link);
         view.changeText();
         if (link != null) {
             type =Constants.SNIPPETMESSAGE;
-//            fetchDatafromSourse(s);
             PreviewObject previewObject = new PreviewObject();
             previewObject.setText(text);
             previewObject.setType(type);
             view.showData(previewObject);
-
         } else {
             type = Constants.SIMPLE_MESSAGE;
             PreviewObject previewObject = new PreviewObject();
@@ -77,9 +82,12 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void callbackMainRequest(PreviewObject previewObject) {
-        Log.d("Log", "Call back");
         previewObject.setText(text);
         previewObject.setType(type);
+        waitSet.remove(previewObject.getUrl());
+        for (Iterator<String>iterator = waitSet.iterator();iterator.hasNext();) {
+
+        }
         view.addData(itemNumber, previewObject);
         }
 
