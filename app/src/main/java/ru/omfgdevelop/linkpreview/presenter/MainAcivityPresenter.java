@@ -28,6 +28,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     int itemNumber;
     String link;
     Map<String,Integer> map;
+    Map<String,String>textMap;
 
     public MainAcivityPresenter(MainActivityContract.View view) {
         this.view = view;
@@ -35,6 +36,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         this.compositeDisposable = new CompositeDisposable();
         waitSet = new HashSet<>();
         map = new HashMap<>();
+        textMap = new HashMap<>();
     }
 
     @Override
@@ -64,12 +66,14 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         view.changeText();
         if (lnk != null) {
             Log.d("Log","link "+lnk);
-           lnk= lnk.replace("http:","https://www.");
+           lnk= lnk.replace("http://","");
+           lnk= lnk.replace("https://","");
            if (!lnk.endsWith("/"))
-               lnk+="/";
+               lnk=lnk.replace("/","");
 //           link= link.replace("https:","https://");
             Log.d("Log","link "+lnk);
             map.put(lnk,-1);
+            textMap.put(lnk,s);
             type =Constants.SNIPPETMESSAGE;
             PreviewObject previewObject = new PreviewObject();
             previewObject.setText(text);
@@ -101,29 +105,41 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void callbackMainRequest(PreviewObject previewObject) {
-        previewObject.setText(text);
+
         previewObject.setType(type);
         waitSet.remove(previewObject.getUrl());
-//        if (previewObject.getUrl().startsWith("https://")){
-//            previewObject.setUrl(previewObject.getUrl().replace("https://","http:"+"//"));
-//        }
-//        if (previewObject.getUrl().endsWith("/")){
-//            previewObject.setUrl(previewObject.getUrl().replace("/",""));
-//        }
-//        if (previewObject.getUrl().startsWith("https://www")){
-//            previewObject.setUrl(previewObject.getUrl().replace("https://www.","https://"));
-//        }
-        Log.d("Log", "eq "+link.equals(previewObject.getUrl()));
+//ДА наверно лучше заменить парсером
+
+        if (previewObject.getUrl().startsWith("https:")){
+            previewObject.setUrl(previewObject.getUrl().replace("https://",""));
+        }
+        if (previewObject.getUrl().startsWith("http:")){
+            previewObject.setUrl(previewObject.getUrl().replace("http://",""));
+        }
+
+        if (previewObject.getUrl().startsWith("www.")){
+            previewObject.setUrl(previewObject.getUrl().replace("www.",""));
+        }
+        if (previewObject.getUrl().endsWith("/")){
+            previewObject.setUrl(previewObject.getUrl().replace("/",""));
+        }
+        if (previewObject.getUrl().startsWith("about.")){
+            previewObject.setUrl(previewObject.getUrl().replace("about.",""));
+        }
+
+//        Log.d("Log", "eq "+link.equals(previewObject.getUrl()));
         Log.d("Log", "eq "+link);
         Log.d("Log", "eq "+previewObject.getUrl());
         Log.d("Log", "url "+previewObject.getUrl());
         Log.d("Log","map "+map.get(previewObject.getUrl()));
+        previewObject.setText(textMap.get(previewObject.getUrl()));
         view.addData(map.get(previewObject.getUrl()), previewObject);
         map.remove(previewObject.getUrl());
         }
 
     @Override
     public void onErrorCallBack(Throwable t) {
+        Log.d("Log", "On error callback");
         view.removeDataItem(itemNumber);
         PreviewObject previewObject = new PreviewObject();
         previewObject.setType(Constants.SIMPLE_MESSAGE);
