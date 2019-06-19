@@ -22,6 +22,6 @@ public interface MainActivityContract {
         void fetchDatafromSourse(String q);
         void onDestroy();
         void onButtonPressed(String s);
-        void provideNumber(int i);
+        void provideNumber(int i, PreviewObject previewObject);
     }
 }

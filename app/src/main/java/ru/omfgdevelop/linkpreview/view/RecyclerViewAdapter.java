@@ -130,7 +130,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void bind(@NonNull PreviewObject previewObject, int i) {
             textTextView.setText(previewObject.getText());
-            if (previewObject.getUrl()!=null){
+            if (previewObject.getImage()!=null){
             titleTextView.setText(previewObject.getTitle());
             descriptionTextView.setText(previewObject.getDescription());
             String url = previewObject.getImage();
@@ -144,7 +144,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
 
-        }else callBack.giveItemNumber(i);
+        }else callBack.giveItemNumber(i, previewObject);
         }
     }
 

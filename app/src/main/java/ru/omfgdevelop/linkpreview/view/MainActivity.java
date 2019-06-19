@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         adapter = new RecyclerViewAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        presenter.onButtonPressed("http://ya.ru");
+        presenter.onButtonPressed("http://google.com");
+        presenter.onButtonPressed("http://github.com");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
-    public void giveItemNumber(int i) {
-        presenter.provideNumber(i);
+    public void giveItemNumber(int i, PreviewObject previewObject) {
+        presenter.provideNumber(i, previewObject);
     }
 }

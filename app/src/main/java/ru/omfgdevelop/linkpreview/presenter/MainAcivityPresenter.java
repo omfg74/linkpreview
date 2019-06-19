@@ -2,7 +2,10 @@ package ru.omfgdevelop.linkpreview.presenter;
 
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,11 +27,14 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     String text;
     int itemNumber;
     String link;
+    Map<String,Integer> map;
 
     public MainAcivityPresenter(MainActivityContract.View view) {
         this.view = view;
         this.model = new MainRequest(this);
         this.compositeDisposable = new CompositeDisposable();
+        waitSet = new HashSet<>();
+        map = new HashMap<>();
     }
 
     @Override
@@ -38,10 +44,8 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
 
     @Override
     public void fetchDatafromSourse(String q) {
+        waitSet.add(link);
         model.createRequest(q);
-        waitSet.add(q);
-//        Log.d("Log", "Model creAate request");
-//        callbackMainRequest(new PreviewObject());
     }
 
 
@@ -54,14 +58,23 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     public void onButtonPressed(String s) {
         this.text = s;
         LinkParserInterface linkParserInterface = new LinkParser();
-        link = linkParserInterface.parse(s);
-        waitSet.add(link);
+        String lnk = linkParserInterface.parse(s);
+        link= lnk;
+
         view.changeText();
-        if (link != null) {
+        if (lnk != null) {
+            Log.d("Log","link "+lnk);
+           lnk= lnk.replace("http:","https://www.");
+           if (!lnk.endsWith("/"))
+               lnk+="/";
+//           link= link.replace("https:","https://");
+            Log.d("Log","link "+lnk);
+            map.put(lnk,-1);
             type =Constants.SNIPPETMESSAGE;
             PreviewObject previewObject = new PreviewObject();
             previewObject.setText(text);
             previewObject.setType(type);
+            previewObject.setUrl(lnk);
             view.showData(previewObject);
         } else {
             type = Constants.SIMPLE_MESSAGE;
@@ -74,10 +87,16 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     }
 
     @Override
-    public void provideNumber(int i) {
+    public void provideNumber(int i, PreviewObject previewObject) {
+        Log.d("Log","map 2"+previewObject.getUrl());
+        if (map.get(previewObject.getUrl())==-1){
         this.itemNumber = i;
-        fetchDatafromSourse(link);
-
+        map.put(previewObject.getUrl(),i);
+        Log.d("Log","map 1"+map.get(previewObject.getUrl()));
+//        if (!waitSet.contains(link)) {
+            fetchDatafromSourse(previewObject.getUrl());
+//        }
+        }
     }
 
     @Override
@@ -85,10 +104,22 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         previewObject.setText(text);
         previewObject.setType(type);
         waitSet.remove(previewObject.getUrl());
-        for (Iterator<String>iterator = waitSet.iterator();iterator.hasNext();) {
-
-        }
-        view.addData(itemNumber, previewObject);
+//        if (previewObject.getUrl().startsWith("https://")){
+//            previewObject.setUrl(previewObject.getUrl().replace("https://","http:"+"//"));
+//        }
+//        if (previewObject.getUrl().endsWith("/")){
+//            previewObject.setUrl(previewObject.getUrl().replace("/",""));
+//        }
+//        if (previewObject.getUrl().startsWith("https://www")){
+//            previewObject.setUrl(previewObject.getUrl().replace("https://www.","https://"));
+//        }
+        Log.d("Log", "eq "+link.equals(previewObject.getUrl()));
+        Log.d("Log", "eq "+link);
+        Log.d("Log", "eq "+previewObject.getUrl());
+        Log.d("Log", "url "+previewObject.getUrl());
+        Log.d("Log","map "+map.get(previewObject.getUrl()));
+        view.addData(map.get(previewObject.getUrl()), previewObject);
+        map.remove(previewObject.getUrl());
         }
 
     @Override
