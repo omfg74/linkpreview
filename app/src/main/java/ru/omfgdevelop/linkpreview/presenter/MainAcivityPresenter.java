@@ -45,7 +45,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
     }
 
     @Override
-    public void fetchDatafromSourse(String q) {
+    public void fetchDatafromSourse(PreviewObject q) {
         waitSet.add(link);
         model.createRequest(q);
     }
@@ -66,10 +66,10 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         view.changeText();
         if (lnk != null) {
             Log.d("Log","link "+lnk);
-           lnk= lnk.replace("http://","");
-           lnk= lnk.replace("https://","");
-           if (!lnk.endsWith("/"))
-               lnk=lnk.replace("/","");
+//           lnk= lnk.replace("http://","");
+//           lnk= lnk.replace("https://","");
+//           if (!lnk.endsWith("/"))
+//               lnk=lnk.replace("/","");
 //           link= link.replace("https:","https://");
             Log.d("Log","link "+lnk);
             map.put(lnk,-1);
@@ -79,6 +79,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
             previewObject.setText(text);
             previewObject.setType(type);
             previewObject.setUrl(lnk);
+            previewObject.setLink(lnk);
             view.showData(previewObject);
         } else {
             type = Constants.SIMPLE_MESSAGE;
@@ -98,7 +99,7 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         map.put(previewObject.getUrl(),i);
         Log.d("Log","map 1"+map.get(previewObject.getUrl()));
 //        if (!waitSet.contains(link)) {
-            fetchDatafromSourse(previewObject.getUrl());
+            fetchDatafromSourse(previewObject);
 //        }
         }
     }
@@ -110,30 +111,30 @@ public class MainAcivityPresenter implements MainActivityContract.Presenter, Mai
         waitSet.remove(previewObject.getUrl());
 //ДА наверно лучше заменить парсером
 
-        if (previewObject.getUrl().startsWith("https:")){
-            previewObject.setUrl(previewObject.getUrl().replace("https://",""));
-        }
-        if (previewObject.getUrl().startsWith("http:")){
-            previewObject.setUrl(previewObject.getUrl().replace("http://",""));
-        }
-
-        if (previewObject.getUrl().startsWith("www.")){
-            previewObject.setUrl(previewObject.getUrl().replace("www.",""));
-        }
-        if (previewObject.getUrl().endsWith("/")){
-            previewObject.setUrl(previewObject.getUrl().replace("/",""));
-        }
-        if (previewObject.getUrl().startsWith("about.")){
-            previewObject.setUrl(previewObject.getUrl().replace("about.",""));
-        }
+//        if (previewObject.getUrl().startsWith("https:")){
+//            previewObject.setUrl(previewObject.getUrl().replace("https://",""));
+//        }
+//        if (previewObject.getUrl().startsWith("http:")){
+//            previewObject.setUrl(previewObject.getUrl().replace("http://",""));
+//        }
+//
+//        if (previewObject.getUrl().startsWith("www.")){
+//            previewObject.setUrl(previewObject.getUrl().replace("www.",""));
+//        }
+//        if (previewObject.getUrl().endsWith("/")){
+//            previewObject.setUrl(previewObject.getUrl().replace("/",""));
+//        }
+//        if (previewObject.getUrl().startsWith("about.")){
+//            previewObject.setUrl(previewObject.getUrl().replace("about.",""));
+//        }
 
 //        Log.d("Log", "eq "+link.equals(previewObject.getUrl()));
         Log.d("Log", "eq "+link);
         Log.d("Log", "eq "+previewObject.getUrl());
         Log.d("Log", "url "+previewObject.getUrl());
-        Log.d("Log","map "+map.get(previewObject.getUrl()));
-        previewObject.setText(textMap.get(previewObject.getUrl()));
-        view.addData(map.get(previewObject.getUrl()), previewObject);
+        Log.d("Log","map "+map.get(previewObject.getLink()));
+        previewObject.setText(textMap.get(previewObject.getLink()));
+        view.addData(map.get(previewObject.getLink()), previewObject);
         map.remove(previewObject.getUrl());
         }
 

@@ -13,13 +13,13 @@ public interface MainActivityContract {
     }
 
     interface Model {
-        void createRequest(String q);
+        void createRequest(PreviewObject q);
 //        Observable<PreviewObject> createRequest2(String q);
     }
 
     interface Presenter {
         void onCreate();
-        void fetchDatafromSourse(String q);
+        void fetchDatafromSourse(PreviewObject previewObject);
         void onDestroy();
         void onButtonPressed(String s);
         void provideNumber(int i, PreviewObject previewObject);

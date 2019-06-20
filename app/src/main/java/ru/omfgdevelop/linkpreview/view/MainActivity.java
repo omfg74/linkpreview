@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         presenter.onButtonPressed("http://github.com");
         presenter.onButtonPressed("http://gitlab.com");
         presenter.onButtonPressed("http://mail.ru");
-        presenter.onButtonPressed("http://1с-bitrix.ru");
+//        presenter.onButtonPressed("http://1с-bitrix.ru");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

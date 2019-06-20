@@ -28,6 +28,15 @@ public class PreviewObject {
     private String url;
     private String text;
     private int type;
+    private String link;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     public int getType() {
         return type;
