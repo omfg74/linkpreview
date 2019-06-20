@@ -9,6 +9,4 @@ import ru.omfgdevelop.linkpreview.repository.PreviewObject;
 public interface RetrofitInterface {
     @GET("/")
     Observable<PreviewObject> getPreviewObject(@Query("key") String key, @Query("q") String q);
-    @GET("/")
-    Call<PreviewObject> getPreviewObjectRetrofit(@Query("key") String key, @Query("q") String q);
 }

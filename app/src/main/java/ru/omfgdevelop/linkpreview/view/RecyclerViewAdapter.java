@@ -45,11 +45,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return position;
     }
 
-
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view;
-
         switch (i) {
             case Constants.SNIPPETMESSAGE:
                 view = LayoutInflater.from(LinkPreview.getContext()).inflate(R.layout.item_linkprewiew_item, viewGroup, false);
@@ -64,7 +62,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder viewHolder, int i) {
-//                        viewHolder.bind(previewObjects.get(i), i);//
         switch (previewObjects.get(i).getType()){
             case Constants.SNIPPETMESSAGE:
                     viewHolder.bind(previewObjects.get(i), i);

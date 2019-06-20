@@ -35,12 +35,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         adapter = new RecyclerViewAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        presenter.onButtonPressed("http://ya.ru");
-        presenter.onButtonPressed("http://google.com");
-        presenter.onButtonPressed("http://github.com");
-        presenter.onButtonPressed("http://gitlab.com");
-        presenter.onButtonPressed("http://mail.ru");
-//        presenter.onButtonPressed("http://1с-bitrix.ru");
+
+        //uncomment for test usage
+//        presenter.onButtonPressed("http://ya.ru");
+//        presenter.onButtonPressed("http://google.com");
+//        presenter.onButtonPressed("http://github.com");
+//        presenter.onButtonPressed("http://gitlab.com");
+//        presenter.onButtonPressed("http://mail.ru");
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -66,24 +66,4 @@ public class MainRequest implements MainActivityContract.Model {
                 });
 
     }
-
-
-//    @Override
-//    public void createRequest(String q) {
-//        RetrofitClient retrofitClient = RetrofitClient.getInstance();
-//        Call<PreviewObject> response = retrofitClient.getRetrofitInterface().getPreviewObjectRetrofit(Constants.API_KEY, q);
-//        response.enqueue(new Callback<PreviewObject>() {
-//            @Override
-//            public void onResponse(Call<PreviewObject> call, Response<PreviewObject> response) {
-//                requestcallback.callbackMainRequest(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<PreviewObject> call, Throwable t) {
-//                requestcallback.onErrorCallBack(t);
-//            }
-//        });
-//
-//
-//    }
 }

@@ -9,11 +9,6 @@ public class PreviewObject {
     public PreviewObject() {
     }
 
-    public PreviewObject(String text) {
-        this.text = text;
-    }
-
-
     @SerializedName("title")
     @Expose
     private String title;
